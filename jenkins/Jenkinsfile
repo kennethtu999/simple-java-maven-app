@@ -5,8 +5,8 @@ pipeline {
     }
     stages {
         stage('SonarQube analysis') {
-            tools {
-                sonarQube 'SonarQube Scanner 3.3'
+            script {
+                scannerHome = tool 'SonarQube Scanner 3.3'
             }
             steps {
                 withSonarQubeEnv('SonarQube Scanner 3.3') {
