@@ -9,7 +9,7 @@ pipeline {
                 script {
                     scannerHome = tool 'SonarQube Scanner 3.3'
                 }
-                withSonarQubeEnv('SonarQube server') {
+                withSonarQubeEnv('SonarQubeServer') {
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
                 }
             }
