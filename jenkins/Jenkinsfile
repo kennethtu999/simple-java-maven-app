@@ -4,6 +4,11 @@ pipeline {
         maven 'Maven 3' 
     }
     stages {
+        stage('SonarQube analysis') {
+            withSonarQubeEnv('SonarQube Server') {
+               sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
