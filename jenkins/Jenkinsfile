@@ -1,11 +1,13 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3' 
         sonarQube 'SonarQube Scanner 3.3'
     }
     stages {
         stage('SonarQube analysis') {
+            tools {
+                sonarQube 'SonarQube Scanner 3.3'
+            }
             withSonarQubeEnv('SonarQube Scanner 3.3') {
                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
             }
