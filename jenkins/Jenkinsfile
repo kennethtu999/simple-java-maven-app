@@ -4,16 +4,6 @@ pipeline {
         maven 'Maven 3'
     }
     stages {
-        stage('SonarQube analysis') {
-            steps {
-                script {
-                    scannerHome = tool 'SonarQube Scanner 3.3'
-                }
-                withSonarQubeEnv('SonarQubeServer') {
-                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
-                }
-            }
-        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
@@ -26,6 +16,22 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('JaCoCo') {
+            steps {
+                echo 'Code Coverage'
+                jacoco()
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                script {
+                    scannerHome = tool 'SonarQube Scanner 3.3'
+                }
+                withSonarQubeEnv('SonarQubeServer') {
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
                 }
             }
         }
